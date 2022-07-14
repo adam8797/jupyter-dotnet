@@ -1,11 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-focal
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
-RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get -y install python3 python3-pip python3-dev ipython3 nano plantuml \
-	&& cp /usr/share/plantuml/plantuml.jar /usr/local/bin/plantuml.jar
-
-RUN apt-get -y install nmap 
+RUN apt update \
+    && apt -y upgrade \
+    && apt -y install python3 python3-pip python3-dev ipython3 nano plantuml \
+    && cp /usr/share/plantuml/plantuml.jar /usr/local/bin/plantuml.jar
 
 RUN pip3 install jupyterlab
 RUN pip3 install iplantuml
@@ -49,8 +47,7 @@ COPY graphviz.ipynb $HOME/work/examples/graphviz.ipynb
 
 USER root
 
-RUN apt-get install sudo \
-    && usermod -aG sudo $NB_USER
+RUN apt-get install sudo && usermod -aG sudo $NB_USER
 
 # prevent git init on this level
 RUN mkdir $HOME/work/.git
